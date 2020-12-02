@@ -581,10 +581,11 @@ impl<'a, W: 'a + Write + Seek, T: ColorType> ImageEncoder<'a, W, T> {
         height: u32,
     ) -> TiffResult<ImageEncoder<'a, W, T>> {
         let row_samples = u64::from(width) * u64::try_from(<T>::BITS_PER_SAMPLE.len())?;
-        let row_bytes = row_samples * u64::from(<T::Inner>::BYTE_LEN);
+        // let row_bytes = row_samples * u64::from(<T::Inner>::BYTE_LEN);
 
         // As per tiff spec each strip should be about 8k long
-        let rows_per_strip = (8000 + row_bytes - 1) / row_bytes;
+        // let rows_per_strip = (8000 + row_bytes - 1) / row_bytes;
+        let rows_per_strip = height as u64;
 
         let strip_count = (u64::from(height) + rows_per_strip - 1) / rows_per_strip;
 
